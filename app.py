@@ -5,6 +5,19 @@ import joblib
 # Load your data
 df = pd.read_csv('df_model.csv')
 
+# Set the background color and text color
+st.markdown(
+    """
+    <style>
+    body {
+        color: #788936;
+        background-color: #788936;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Define the main function to create and run the app
 def main():
     st.title('Project Success Success Predictor')
@@ -12,19 +25,19 @@ def main():
     # Add input fields for each feature
 
     # Slider for Project Size (USD)
-    project_size = st.slider('Project Size (USD)', min_value=0, max_value=int(df['project_size_USD_calculated'].max()), value=int(df['project_size_USD_calculated'].mean()))
+    project_size = st.slider('Project Size (USD)', min_value=0, max_value=int(df['project_size_USD_calculated'].max()), value=int(df['project_size_USD_calculated'].mean()), key='project_size', help='Set the project size in USD')
 
     # Slider for Start Year
-    startyear = st.slider('Start Year', min_value=int(df['startyear'].min()), max_value=int(df['startyear'].max()), value=int(df['startyear'].median()))
+    startyear = st.slider('Start Year', min_value=int(df['startyear'].min()), max_value=int(df['startyear'].max()), value=int(df['startyear'].median()), key='startyear', help='Set the start year')
 
     # Slider for Evaluation Year
-    evalyear = st.slider('Evaluation Year', min_value=int(df['evalyear'].min()), max_value=int(df['evalyear'].max()), value=int(df['evalyear'].median()))
+    evalyear = st.slider('Evaluation Year', min_value=int(df['evalyear'].min()), max_value=int(df['evalyear'].max()), value=int(df['evalyear'].median()), key='evalyear', help='Set the evaluation year')
 
     # Slider for Evaluation Lag (Days)
-    eval_lag = st.slider('Evaluation Lag (Days)', min_value=-30, max_value=365*5, value=int(df['eval_lag'].median()))
+    eval_lag = st.slider('Evaluation Lag (Days)', min_value=-30, max_value=365*5, value=int(df['eval_lag'].median()), key='eval_lag', help='Set the evaluation lag in days')
 
     # Slider for Project Duration in Days
-    project_duration = st.slider('Project Duration (Days)', min_value=0, max_value=3640, value=int(df['project_duration'].median()))
+    project_duration = st.slider('Project Duration (Days)', min_value=0, max_value=3640, value=int(df['project_duration'].median()), key='project_duration', help='Set the project duration in days')
 
     donor = st.selectbox('Donor', df['donor'].unique())
 
@@ -32,14 +45,16 @@ def main():
     country_codes = df['country_code_WB'].unique()  
     country_code = st.selectbox('Country Code', options=country_codes)
 
-    region = st.selectbox('Region', df['region'].unique())
+    # Radio buttons for Region
+    region = st.radio('Region', df['region'].unique(), key='region')
 
-    # Dropdown for External Evaluator with capitalized options
-    external_evaluator = st.selectbox('External Evaluator', options=df['external_evaluator'].unique(), format_func=lambda x: x.capitalize())
+    # Radio buttons for Evaluation Type (formerly External Evaluator)
+    evaluation_types = df['external_evaluator'].unique()
+    evaluation_type = st.radio('Evaluation Type', evaluation_types, key='evaluation_type')
 
     # Dropdown for Sector (formerly Grouped Category) without NaN values
     sectors = df['Grouped Category'].dropna().unique()
-    sector = st.selectbox('Sector', sectors)
+    sector = st.selectbox('Sector', sectors, key='sector')
 
     # Load the trained model and feature columns
     model_path = 'model.joblib'
@@ -58,7 +73,7 @@ def main():
         'country_code_WB': [country_code],
         'region': [region],
         'Grouped Category': [sector],
-        'external_evaluator': [external_evaluator]
+        'external_evaluator': [evaluation_type]
     })
     
     # Handle categorical variables
