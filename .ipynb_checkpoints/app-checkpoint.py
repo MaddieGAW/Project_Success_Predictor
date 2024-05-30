@@ -37,7 +37,6 @@ st.markdown(
 
 # Define the main function to create and run the app
 def main():
-    st.title('Project Success Predictor')
 
     # Add an image
     image = 'What makes International Aid Projects successful (1).png'  # Replace 'your_image_path.jpg' with the path to your image file
