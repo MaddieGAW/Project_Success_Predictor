@@ -5,15 +5,9 @@ import joblib
 # Load your data
 df = pd.read_csv('df_model.csv')
 
-# Load the trained model and feature columns
-model_path = 'model.joblib'
-columns_path = 'model_columns.joblib'
-model = joblib.load(model_path)
-model_columns = joblib.load(columns_path)
-
 # Define the main function to create and run the app
 def main():
-    st.title('Project Success Predictor')
+    st.title('Project Success Success Predictor')
 
     # Add input fields for each feature
     project_size = st.number_input('Project Size (USD)', value=df['project_size_USD_calculated'].mean())
@@ -29,6 +23,12 @@ def main():
     external_evaluator = st.selectbox('External Evaluator', df['external_evaluator'].unique())
     grouped_category = st.selectbox('Grouped Category', df['Grouped Category'].unique())
 
+    # Load the trained model and feature columns
+    model_path = 'model.joblib'
+    columns_path = 'model_columns.joblib'
+    model = joblib.load(model_path)
+    model_columns = joblib.load(columns_path)
+
     # Prepare new data for prediction
     new_data = pd.DataFrame({
         'project_size_USD_calculated': [project_size],
@@ -39,12 +39,19 @@ def main():
         'donor': [donor],
         'country_code_WB': [country_code],
         'region': [region],
-        'grouped_category': [grouped_category],
+        'colonial_relations': [colonial_relations],
+        'sector_code': [sector_code],
+        'office_presence': [office_presence],
         'external_evaluator': [external_evaluator]
     })
 
-    # Encode the new data
-    new_data_encoded = pd.get_dummies(new_data, columns=['donor', 'country_code_WB', 'region', 'external_evaluator', 'Grouped Category'], drop_first=True)
+    
+    # Encode the combined data
+    df_encoded = pd.get_dummies(df_combined, drop_first=True)
+    
+    # Handle categorical variables
+    categorical_columns = new_data['donor', 'country_code_WB', 'region', 'external_evaluator', 'Grouped Category']
+    new_data_encoded = pd.get_dummies(data, columns=categorical_columns, drop_first=True)
 
     # Predict the success of the project
     if st.button('Predict'):

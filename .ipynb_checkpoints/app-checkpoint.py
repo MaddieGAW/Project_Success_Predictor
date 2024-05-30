@@ -45,19 +45,13 @@ def main():
         'external_evaluator': [external_evaluator]
     })
 
-    # Drop NaN values from the input data
-    df_combined = pd.concat([df, new_data], ignore_index=True)
-    df_combined.dropna(inplace=True)
-
+    
     # Encode the combined data
     df_encoded = pd.get_dummies(df_combined, drop_first=True)
-
-    # Separate the new encoded data
-    new_data_encoded = df_encoded.tail(1)
-
-    # Drop columns that are not in model_columns
-    new_data_encoded = new_data_encoded[model_columns]# Combine the new data with the original df5 to ensure all columns are present
-    df_combined = pd.concat([df, new_data], ignore_index=True)
+    
+    # Handle categorical variables
+    categorical_columns = new_data['donor', 'country_code_WB', 'region', 'external_evaluator', 'Grouped Category']
+    new_data_encoded = pd.get_dummies(data, columns=categorical_columns, drop_first=True)
 
     # Predict the success of the project
     if st.button('Predict'):
