@@ -39,9 +39,7 @@ def main():
         'donor': [donor],
         'country_code_WB': [country_code],
         'region': [region],
-        'colonial_relations': [colonial_relations],
-        'sector_code': [sector_code],
-        'office_presence': [office_presence],
+        'grouped_category': [grouped_category],
         'external_evaluator': [external_evaluator]
     })
 
