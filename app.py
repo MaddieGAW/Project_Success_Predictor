@@ -39,15 +39,10 @@ def main():
         'donor': [donor],
         'country_code_WB': [country_code],
         'region': [region],
-        'colonial_relations': [colonial_relations],
         'sector_code': [sector_code],
-        'office_presence': [office_presence],
+        'Grouped Category': [Grouped Category],
         'external_evaluator': [external_evaluator]
     })
-
-    
-    # Encode the combined data
-    df_encoded = pd.get_dummies(df_combined, drop_first=True)
     
     # Handle categorical variables
     categorical_columns = new_data['donor', 'country_code_WB', 'region', 'external_evaluator', 'Grouped Category']
