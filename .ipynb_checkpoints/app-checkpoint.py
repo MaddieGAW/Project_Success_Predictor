@@ -4,25 +4,24 @@ import joblib
 
 # Load your data
 df = pd.read_csv('df_model.csv')
-df2 = pd.read_csv('df_2.csv')
 
 # Define the main function to create and run the app
 def main():
     st.title('Project Success Success Predictor')
 
     # Add input fields for each feature
-    project_size = st.number_input('Project Size (USD)', value=df2['project_size_USD_calculated'].mean())
-    startyear = st.number_input('Start Year', value=df2['startyear'].median())
-    evalyear = st.number_input('Evaluation Year', value=df2['evalyear'].median())
-    eval_lag = st.number_input('Evaluation Lag', value=df2['eval_lag'].median())
-    project_duration = st.number_input('Project Duration', value=df2['project_duration'].median())
-    completion_year = st.number_input('Completion Year', value=df2['completion_year'].median())
+    project_size = st.number_input('Project Size (USD)', value=df['project_size_USD_calculated'].mean())
+    startyear = st.number_input('Start Year', value=df['startyear'].median())
+    evalyear = st.number_input('Evaluation Year', value=df['evalyear'].median())
+    eval_lag = st.number_input('Evaluation Lag', value=df['eval_lag'].median())
+    project_duration = st.number_input('Project Duration', value=df['project_duration'].median())
+    completion_year = st.number_input('Completion Year', value=df['completion_year'].median())
 
-    donor = st.selectbox('Donor', df2['donor'].unique())
-    country_code = st.selectbox('Country Code', df2['country_code_WB'].unique())
+    donor = st.selectbox('Donor', df['donor'].unique())
+    country_code = st.selectbox('Country Code', df['country_code_WB'].unique())
     region = st.selectbox('Region', df['region'].unique())
-    external_evaluator = st.selectbox('External Evaluator', df2['external_evaluator'].unique())
-    grouped_category = st.selectbox('Grouped Category', df2['Grouped Category'].unique())
+    external_evaluator = st.selectbox('External Evaluator', df['external_evaluator'].unique())
+    grouped_category = st.selectbox('Grouped Category', df['Grouped Category'].unique())
 
     # Load the trained model and feature columns
     model_path = 'model.joblib'
