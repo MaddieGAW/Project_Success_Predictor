@@ -12,7 +12,7 @@ def main():
     # Add input fields for each feature
 
     # Slider for Project Size (USD)
-    project_size = st.slider('Project Size (USD)', min_value=df['project_size_USD_calculated'].min(), max_value=df['project_size_USD_calculated'].max(), value=df['project_size_USD_calculated'].mean())
+    project_size = st.slider('Project Size (USD)', min_value=int(df['project_size_USD_calculated'].min()), max_value=int(df['project_size_USD_calculated'].max()), value=int(df['project_size_USD_calculated'].mean()))
 
     # Slider for Start Year
     startyear = st.slider('Start Year', min_value=int(df['startyear'].min()), max_value=int(df['startyear'].max()), value=int(df['startyear'].median()))
@@ -21,10 +21,10 @@ def main():
     evalyear = st.slider('Evaluation Year', min_value=int(df['evalyear'].min()), max_value=int(df['evalyear'].max()), value=int(df['evalyear'].median()))
 
     # Slider for Evaluation Lag in Days
-    eval_lag = st.slider('Evaluation Lag in Days', min_value=-30, max_value=365*5, value=df['eval_lag'].median())
+    eval_lag = st.slider('Evaluation Lag in Days', min_value=-30, max_value=365*5, value=int(df['eval_lag'].median()))
 
     # Slider for Project Duration in Days
-    project_duration = st.slider('Project Duration (Days)', min_value=0, max_value=3640, value=df['project_duration'].median())
+    project_duration = st.slider('Project Duration (Days)', min_value=0, max_value=3640, value=int(df['project_duration'].median()))
 
     donor = st.selectbox('Donor', df['donor'].unique())
 
