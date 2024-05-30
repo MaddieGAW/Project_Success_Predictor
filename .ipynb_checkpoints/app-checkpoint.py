@@ -35,9 +35,13 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+    # Add an image
+    image = 'What makes International Aid Projects successful (1).png'  # Replace 'your_image_path.jpg' with the path to your image file
+    st.image(image, use_column_width=True)
+
 # Define the main function to create and run the app
 def main():
-    st.title('Project Success Success Predictor')
+    st.title('Project Success Predictor')
 
     # Add input fields for each feature
 
