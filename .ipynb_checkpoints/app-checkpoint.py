@@ -12,7 +12,7 @@ def main():
     # Add input fields for each feature
 
     # Slider for Project Size (USD)
-    project_size = st.slider('Project Size (USD)', min_value=int(df['project_size_USD_calculated'].min()), max_value=int(df['project_size_USD_calculated'].max()), value=int(df['project_size_USD_calculated'].mean()))
+    project_size = st.slider('Project Size (USD)', min_value=0, max_value=int(df['project_size_USD_calculated'].max()), value=int(df['project_size_USD_calculated'].mean()))
 
     # Slider for Start Year
     startyear = st.slider('Start Year', min_value=int(df['startyear'].min()), max_value=int(df['startyear'].max()), value=int(df['startyear'].median()))
@@ -20,8 +20,8 @@ def main():
     # Slider for Evaluation Year
     evalyear = st.slider('Evaluation Year', min_value=int(df['evalyear'].min()), max_value=int(df['evalyear'].max()), value=int(df['evalyear'].median()))
 
-    # Slider for Evaluation Lag in Days
-    eval_lag = st.slider('Evaluation Lag in Days', min_value=-30, max_value=365*5, value=int(df['eval_lag'].median()))
+    # Slider for Evaluation Lag (Days)
+    eval_lag = st.slider('Evaluation Lag (Days)', min_value=-30, max_value=365*5, value=int(df['eval_lag'].median()))
 
     # Slider for Project Duration in Days
     project_duration = st.slider('Project Duration (Days)', min_value=0, max_value=3640, value=int(df['project_duration'].median()))
@@ -37,9 +37,9 @@ def main():
     # Dropdown for External Evaluator with capitalized options
     external_evaluator = st.selectbox('External Evaluator', options=df['external_evaluator'].unique(), format_func=lambda x: x.capitalize())
 
-    # Dropdown for Grouped Category without NaN values
-    grouped_categories = df['Grouped Category'].dropna().unique()
-    grouped_category = st.selectbox('Grouped Category', grouped_categories)
+    # Dropdown for Sector (formerly Grouped Category) without NaN values
+    sectors = df['Grouped Category'].dropna().unique()
+    sector = st.selectbox('Sector', sectors)
 
     # Load the trained model and feature columns
     model_path = 'model.joblib'
@@ -57,7 +57,7 @@ def main():
         'donor': [donor],
         'country_code_WB': [country_code],
         'region': [region],
-        'Grouped Category': [grouped_category],
+        'Grouped Category': [sector],
         'external_evaluator': [external_evaluator]
     })
     
