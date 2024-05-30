@@ -13,6 +13,23 @@ st.markdown(
         color: #788936;
         background-color: #788936;
     }
+    .stSlider>div>div>div>div {
+        background-color: #788936;
+    }
+    .st-rc-slider.stSlider>div {
+        background-color: #788936;
+    }
+    .stButton>button {
+        background-color: #788936;
+        color: white;
+    }
+    .stSelectbox>div>div>div {
+        color: #788936;
+        background-color: white;
+    }
+    .stRadio>div>div>div>label>div:nth-child(2) {
+        color: #788936;
+    }
     </style>
     """,
     unsafe_allow_html=True
