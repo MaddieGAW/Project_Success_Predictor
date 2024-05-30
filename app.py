@@ -44,7 +44,7 @@ def main():
     })
     
     # Handle categorical variables
-    categorical_columns = new_data['donor', 'country_code_WB', 'region', 'external_evaluator', 'Grouped Category']
+    categorical_columns = new_data[['donor', 'country_code_WB', 'region', 'external_evaluator', 'Grouped Category']]
     new_data_encoded = pd.get_dummies(new_data, columns=categorical_columns, drop_first=True)
 
     # Predict the success of the project
