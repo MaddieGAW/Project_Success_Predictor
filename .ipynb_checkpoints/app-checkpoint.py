@@ -10,18 +10,37 @@ def main():
     st.title('Project Success Success Predictor')
 
     # Add input fields for each feature
-    project_size = st.number_input('Project Size (USD)', value=df['project_size_USD_calculated'].mean())
-    startyear = st.number_input('Start Year', value=df['startyear'].median())
-    evalyear = st.number_input('Evaluation Year', value=df['evalyear'].median())
-    eval_lag = st.number_input('Evaluation Lag', value=df['eval_lag'].median())
-    project_duration = st.number_input('Project Duration', value=df['project_duration'].median())
-    completion_year = st.number_input('Completion Year', value=df['completion_year'].median())
+
+    # Slider for Project Size (USD)
+    project_size = st.slider('Project Size (USD)', min_value=df['project_size_USD_calculated'].min(), max_value=df['project_size_USD_calculated'].max(), value=df['project_size_USD_calculated'].mean())
+
+    # Slider for Start Year
+    startyear = st.slider('Start Year', min_value=int(df['startyear'].min()), max_value=int(df['startyear'].max()), value=int(df['startyear'].median()))
+
+    # Slider for Evaluation Year
+    evalyear = st.slider('Evaluation Year', min_value=int(df['evalyear'].min()), max_value=int(df['evalyear'].max()), value=int(df['evalyear'].median()))
+
+    # Slider for Evaluation Lag in Days
+    eval_lag = st.slider('Evaluation Lag in Days', min_value=-30, max_value=365*5, value=df['eval_lag'].median())
+
+    # Slider for Project Duration in Days
+    project_duration = st.slider('Project Duration (Days)', min_value=0, max_value=3640, value=df['project_duration'].median())
 
     donor = st.selectbox('Donor', df['donor'].unique())
-    country_code = st.selectbox('Country Code', df['country_code_WB'].unique())
+
+    # Dropdown for Country Name
+    country_names = df['country_name'].unique()  # Assuming 'country_name' column contains country names
+    country_code_to_name = dict(zip(df['country_code_WB'], df['country_name']))
+    country_code = st.selectbox('Country', options=country_names, format_func=lambda x: country_code_to_name[x])
+
     region = st.selectbox('Region', df['region'].unique())
-    external_evaluator = st.selectbox('External Evaluator', df['external_evaluator'].unique())
-    grouped_category = st.selectbox('Grouped Category', df['Grouped Category'].unique())
+
+    # Dropdown for External Evaluator with capitalized options
+    external_evaluator = st.selectbox('External Evaluator', options=df['external_evaluator'].unique(), format_func=lambda x: x.capitalize())
+
+    # Dropdown for Grouped Category without NaN values
+    grouped_categories = df['Grouped Category'].dropna().unique()
+    grouped_category = st.selectbox('Grouped Category', grouped_categories)
 
     # Load the trained model and feature columns
     model_path = 'model.joblib'
@@ -39,7 +58,7 @@ def main():
         'donor': [donor],
         'country_code_WB': [country_code],
         'region': [region],
-        'Grouped Category': ["Grouped Category"],
+        'Grouped Category': [grouped_category],
         'external_evaluator': [external_evaluator]
     })
     
