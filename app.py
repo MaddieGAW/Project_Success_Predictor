@@ -28,10 +28,9 @@ def main():
 
     donor = st.selectbox('Donor', df['donor'].unique())
 
-    # Dropdown for Country Name
-    country_names = df['country_name'].unique()  # Assuming 'country_name' column contains country names
-    country_code_to_name = dict(zip(df['country_code_WB'], df['country_name']))
-    country_code = st.selectbox('Country', options=country_names, format_func=lambda x: country_code_to_name[x])
+    # Dropdown for Country Code
+    country_codes = df['country_code_WB'].unique()  
+    country_code = st.selectbox('Country Code', options=country_codes)
 
     region = st.selectbox('Region', df['region'].unique())
 
