@@ -39,7 +39,6 @@ def main():
         'donor': [donor],
         'country_code_WB': [country_code],
         'region': [region],
-        'sector_code': [sector_code],
         'Grouped Category': ["Grouped Category"],
         'external_evaluator': [external_evaluator]
     })
