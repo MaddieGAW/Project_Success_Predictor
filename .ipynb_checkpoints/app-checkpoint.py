@@ -47,6 +47,9 @@ def main():
     categorical_columns = ['donor', 'country_code_WB', 'region', 'external_evaluator', 'Grouped Category']
     new_data_encoded = pd.get_dummies(new_data, columns=categorical_columns, drop_first=True)
 
+    # Align the columns of new_data_encoded with model_columns
+    new_data_encoded = new_data_encoded.reindex(columns=model_columns, fill_value=0)
+
     # Predict the success of the project
     if st.button('Predict'):
         prediction = model.predict(new_data_encoded)
