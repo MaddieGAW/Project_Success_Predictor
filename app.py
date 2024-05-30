@@ -5,9 +5,15 @@ import joblib
 # Load your data
 df = pd.read_csv('df_model.csv')
 
+# Load the trained model and feature columns
+model_path = 'model.joblib'
+columns_path = 'model_columns.joblib'
+model = joblib.load(model_path)
+model_columns = joblib.load(columns_path)
+
 # Define the main function to create and run the app
 def main():
-    st.title('Project Success Success Predictor')
+    st.title('Project Success Predictor')
 
     # Add input fields for each feature
     project_size = st.number_input('Project Size (USD)', value=df['project_size_USD_calculated'].mean())
@@ -23,12 +29,6 @@ def main():
     external_evaluator = st.selectbox('External Evaluator', df['external_evaluator'].unique())
     grouped_category = st.selectbox('Grouped Category', df['Grouped Category'].unique())
 
-    # Load the trained model and feature columns
-    model_path = 'model.joblib'
-    columns_path = 'model_columns.joblib'
-    model = joblib.load(model_path)
-    model_columns = joblib.load(columns_path)
-
     # Prepare new data for prediction
     new_data = pd.DataFrame({
         'project_size_USD_calculated': [project_size],
@@ -43,19 +43,8 @@ def main():
         'external_evaluator': [external_evaluator]
     })
 
-    # Drop NaN values from the input data
-    df_combined = pd.concat([df, new_data], ignore_index=True)
-    df_combined.dropna(inplace=True)
-
-    # Encode the combined data
-    df_encoded = pd.get_dummies(df_combined, drop_first=True)
-
-    # Separate the new encoded data
-    new_data_encoded = df_encoded.tail(1)
-
-    # Drop columns that are not in model_columns
-    new_data_encoded = new_data_encoded[model_columns]# Combine the new data with the original df5 to ensure all columns are present
-    df_combined = pd.concat([df, new_data], ignore_index=True)
+    # Encode the new data
+    new_data_encoded = pd.get_dummies(new_data, columns=['donor', 'country_code_WB', 'region', 'external_evaluator', 'Grouped Category'], drop_first=True)
 
     # Predict the success of the project
     if st.button('Predict'):
