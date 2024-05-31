@@ -11,21 +11,21 @@ st.markdown(
     <style>
     body {
         color: #788936;
-        background-color: #788936;
+        background-color: #FFFCF2; /* Set the background color to #FFFCF2 */
     }
     .stSlider>div>div>div>div {
-        background-color: #788936;
+        background-color: #FFFCF2; /* Match the background color for sliders */
     }
     .st-rc-slider.stSlider>div {
-        background-color: #788936;
+        background-color: #FFFCF2; /* Match the background color for range sliders */
     }
     .stButton>button {
-        background-color: #788936;
+        background-color: #788936; /* Change button background color */
         color: white;
     }
     .stSelectbox>div>div>div {
-        color: #788936;
-        background-color: white;
+        color: #788936; /* Set select box text color */
+        background-color: white; /* Match the background color for select boxes */
     }
     .stRadio>div>div>div>label>div:nth-child(2) {
         color: #788936;
